@@ -38,22 +38,27 @@ class Canbo
 		string mcb,ht;
 		Date nvcc;
 	public:
-		Canbo()
-		{
-			this->mcb = "";
-			this->ht = "";
-			this->nvcc.d = 1;
-			this->nvcc.m = 1;
-			this->nvcc.y = 1;
-		}
-		Canbo(string mcb, string ht, int d,int m,int y)
+		Canbo(){}
+		Canbo(string mcb, string ht, Date nvcc)
 		{
 			this->mcb = mcb;
 			this->ht = ht;
-			nvcc.d = d;
-			nvcc.m = m;
-			nvcc.y = y;
+			this->nvcc = nvcc;
 		}
+		//them vao cac ham thiet lap
+		void set_mcb(string mcb)
+		{
+			this->mcb = mcb;
+		}
+		void set_ht(string ht)
+		{
+			this->ht = ht;
+		}
+		void set_date(Date nvcc)
+		{
+			this->nvcc = nvcc;
+		}
+		
 		string get_mcb()
 		{
 			return mcb;
@@ -82,11 +87,17 @@ class Canbo
 		}
 		bool operator >(Canbo a)
 		{
-			if(nvcc.y > a.nvcc.y) return true;
-			else if(nvcc.y == a.nvcc.y)
+			if(nvcc.y != a.nvcc.y)
 			{
-				if(nvcc.m > a.nvcc.m ) return true;
-				else if(nvcc.m == a.nvcc.m) return nvcc.d > a.nvcc.d;
+				return nvcc.y > a.nvcc.y;
+			}
+			if(nvcc.m != a.nvcc.m )
+			{
+				return nvcc.m > a.nvcc.m;
+			}
+			if(nvcc.d != a.nvcc.d)
+			{
+				return nvcc.d > a.nvcc.d;
 			}
 			return false;
 		}
@@ -97,18 +108,14 @@ class Giangvien : public Canbo
 		string dv;
 		float hsl,pccv;
 	public:
-		Giangvien()
-		{
-			this->dv = "";
-			this->hsl = 0.0;
-			this->pccv = 0.0;
-		}
+		Giangvien(){}
 		Giangvien(string dv,float hsl, float pccv)
 		{
 			this->dv = dv;
 			this->hsl = hsl;
 			this->pccv = pccv;
 		}
+		//them cac ham thiet lap
 		string get_dv()
 		{
 			return dv;
@@ -149,6 +156,28 @@ class Quanly
 		Giangvien a[50];
 		int n;
 	public:
+		void check_mcb()
+		{
+			bool check;
+			for(int i=0;i<n;i++)
+			{
+				do
+				{
+					check=false;
+					a[i].fillgv();
+					for(int j=0;j<i;j++)
+					{
+						if(a[i].get_mcb() == a[j].get_mcb())
+						{
+							cout<<"\nMa can bo bi trung, vui long nhap lai !!!\n";
+							check = true;
+							break;
+						}
+					}
+				} while(check == true);
+				
+			}
+		}
 		void fillds()
 		{
 			cout<<"\nNhap so luong giang vien: ";cin>>n;
@@ -158,10 +187,7 @@ class Quanly
 				cout<<"Nhap lai: ";cin>>n;
 				fflush(stdin);
 			}
-			for(int i=0;i<n;i++)
-			{
-				a[i].fillgv();
-			}
+			check_mcb();
 		}
 		void sorttang()
 		{
@@ -169,7 +195,7 @@ class Quanly
 			{
 				for(int j=i+1;j<n;j++)
 				{
-					if(!(a[i] > a[j]))
+					if(a[i] > a[j])
 					{
 						Giangvien tam;
 						tam = a[i];
@@ -186,7 +212,7 @@ class Quanly
 		}
 		void avg()
 		{
-			float sum;
+			float sum=0;
 			for(int i=0;i<n;i++)
 			{
 				sum += a[i].tienluong();
@@ -195,8 +221,9 @@ class Quanly
 			cout<<"Luong trung binh cua "<<n<<" giang vien: "<<int(sum);
 			cout<<"\n--------------------------------------------------\n";
 		}
-		void sortdv()
+		void inbangluong()
 		{
+			//sort theo cung don vi
 			for(int i=0;i<n-1;i++)
 			{
 				for(int j=i+1;j<n;j++)
@@ -224,6 +251,94 @@ class Quanly
 				}
 			}
 		}
+		void tongtiencuamoidonvi()
+		{
+			for(int i=0;i<n-1;i++)
+			{
+				for(int j=i+1;j<n;j++)
+				{
+					if(a[i].get_dv()>a[j].get_dv())
+					{
+						swap(a[i],a[j]);
+					}
+				}
+			}
+			long long sum=0;
+			cout<<"\nTong tien theo tung don vi !!!\n";
+			cout<<"\n--------------------------------\n";
+			for(int i=0;i<n;i++)
+			{
+				sum += a[i].tienluong();
+				if(a[i].get_dv() != a[i+1].get_dv())
+				{
+					
+					cout<<a[i].get_dv()<<" : "<<sum<<endl;
+				}
+			}
+			cout<<"--------------------------------";
+		}
+		void xoa()
+		{
+			string x;cout<<"\nNhap ma can bo can xoa: ";getline(cin,x);
+			int i=0;
+			while(i<n)
+			{
+				if(a[i].get_mcb() == x)
+				{
+					for(int j=i;j<n-1;j++)
+					{
+						a[j] = a[j+1];
+					}
+					n--;
+				}
+				else 
+				{
+					i++;
+				}
+			}
+			cout<<"\nDanh sach sau khi xoa can bo "<<x<<" la !!!\n";
+			for(int i=0;i<n;i++)
+			{
+				a[i].showgv();
+			}
+		}
+		void them()
+		{
+			Giangvien x;
+			cout<<"\nNhap can bo can them !!!\n";
+			x.fillgv();
+			for(int i=0;i<n;i++)
+			{
+				if(x.get_mcb() == a[i].get_mcb())
+				{
+					cout<<"\nMa can bo da ton tai trong danh sach, vui long nhap lai !!!\n";
+					check_mcb();
+				}
+				if(n==50)
+				{
+					cout<<"\nDanh sach da day, khong them bo sung them duoc nua !!!";return;
+				}
+			}
+			a[n]=x;
+			n++;
+			cout<<"\nDanh sach sau khi them la !!!\n";
+			for(int i=0;i<n;i++)
+			{
+				a[i].showgv();
+			}
+		}
+		void timkiemhotronghoten()
+		{
+			string x;cout<<"\nNhap ho can tim: ";getline(cin,x);
+			cout<<"\nDanh sach giang vien co ho: "<<x<<" !!!\n";
+			for(int i=0;i<n;i++)
+			{
+				if(a[i].get_ht().find(x) != string::npos)
+				{
+					a[i].showgv();
+				}
+			}
+		}
 };
 int main()
 {
@@ -231,5 +346,9 @@ int main()
 	a.fillds();
 	a.sorttang();
 	a.avg();
-	a.sortdv();
+	a.inbangluong();
+	a.tongtiencuamoidonvi();
+	a.xoa();
+	a.them();
+	a.timkiemhotronghoten();
 }
