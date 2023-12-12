@@ -45,7 +45,6 @@ class Canbo
 			this->ht = ht;
 			this->nvcc = nvcc;
 		}
-		//them vao cac ham thiet lap
 		void set_mcb(string mcb)
 		{
 			this->mcb = mcb;
@@ -115,7 +114,18 @@ class Giangvien : public Canbo
 			this->hsl = hsl;
 			this->pccv = pccv;
 		}
-		//them cac ham thiet lap
+		void set_dv(string dv)
+		{
+			this->dv = dv;
+		}
+		void set_hsl(float hsl)
+		{
+			this->hsl = hsl;
+		}
+		void set_pccv(float pccv)
+		{
+			this->pccv = pccv;
+		}
 		string get_dv()
 		{
 			return dv;
@@ -158,12 +168,30 @@ class Quanly
 	public:
 		void check_mcb()
 		{
+//			bool check;
+//			for(int i=0;i<n;i++)
+//			{
+//				do
+//				{
+//					check=false;
+//					a[i].fillgv();
+//					for(int j=0;j<i;j++)
+//					{
+//						if(a[i].get_mcb() == a[j].get_mcb())
+//						{
+//							cout<<"\nMa can bo bi trung, vui long nhap lai !!!\n";
+//							check = true;
+//							break;
+//						}
+//					}
+//				} while(check == true);	
+//			}
 			bool check;
 			for(int i=0;i<n;i++)
 			{
-				do
+				while(1)
 				{
-					check=false;
+					check = false;
 					a[i].fillgv();
 					for(int j=0;j<i;j++)
 					{
@@ -174,8 +202,8 @@ class Quanly
 							break;
 						}
 					}
-				} while(check == true);
-				
+					if(!check) break;
+				}
 			}
 		}
 		void fillds()
@@ -223,7 +251,6 @@ class Quanly
 		}
 		void inbangluong()
 		{
-			//sort theo cung don vi
 			for(int i=0;i<n-1;i++)
 			{
 				for(int j=i+1;j<n;j++)
@@ -302,6 +329,7 @@ class Quanly
 				a[i].showgv();
 			}
 		}
+
 		void them()
 		{
 			Giangvien x;
