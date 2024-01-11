@@ -68,7 +68,7 @@ class quanly
 			cout<<"\nNhap so sinh vien: ";cin>>n;
 			for(int i=0;i<n;i++)
 			{
-				cin>>ds[i];	
+				in>>ds[i];	
 			}
 		}
 		void sortdmy()
@@ -95,7 +95,7 @@ class quanly
 			{
 				for(int j=i+1;j<n;j++)
 				{
-					if(ds[i]>=ds[j])
+					if(!(ds[i]>=ds[j]))
 					{
 						swap(ds[i],ds[j]);
 					}
