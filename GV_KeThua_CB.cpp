@@ -298,7 +298,6 @@ class Quanly
 				sum += a[i].tienluong();
 				if(a[i].get_dv() != a[i+1].get_dv())
 				{
-					
 					cout<<a[i].get_dv()<<" : "<<sum<<endl;
 				}
 			}
@@ -367,16 +366,52 @@ class Quanly
 				}
 			}
 		}
+		void luongcaonhatmoidonvi() 
+		{
+		    for (int i = 0; i < n - 1; i++) 
+			{
+		        for (int j = i + 1; j < n; j++) 
+				{
+		            if (a[i].get_dv() > a[j].get_dv()) 
+					{
+		                swap(a[i], a[j]);
+		            }
+		        }
+		    }
+		    string donviHienTai = a[0].get_dv();
+		    float luongCaoNhat = a[0].tienluong();
+		    int indexMaxLuong = 0;
+		    for (int i = 1; i < n; i++) {
+		        if (a[i].get_dv() != donviHienTai) 
+				{
+		            cout << "\nThong tin can bo co muc luong cao nhat o don vi " << donviHienTai << ":\n";
+		            a[indexMaxLuong].showgv();
+		            donviHienTai = a[i].get_dv();
+		            luongCaoNhat = a[i].tienluong();
+		            indexMaxLuong = i;
+		        } 
+				else if (a[i].tienluong() > luongCaoNhat) 
+				{
+		            luongCaoNhat = a[i].tienluong();
+		            indexMaxLuong = i;
+		        }
+		    }
+		    cout << "\nThong tin can bo co muc luong cao nhat o don vi " << donviHienTai << ":\n";
+		    a[indexMaxLuong].showgv();
+		}
+
+
 };
 int main()
 {
 	Quanly a;
 	a.fillds();
-	a.sorttang();
-	a.avg();
-	a.inbangluong();
-	a.tongtiencuamoidonvi();
-	a.xoa();
-	a.them();
-	a.timkiemhotronghoten();
+//	a.sorttang();
+//	a.avg();
+//	a.inbangluong();
+//	a.tongtiencuamoidonvi();
+//	a.xoa();
+//	a.them();
+//	a.timkiemhotronghoten();
+	a.luongcaonhatmoidonvi();
 }

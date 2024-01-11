@@ -12,6 +12,6 @@ int getYear()
 int main() 
 {
     int x = getYear();
-	cout << "nam hien tai la: " << x;
+	cout<<"nam hien tai la: "<<x;
 }
 
