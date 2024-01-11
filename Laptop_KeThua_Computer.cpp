@@ -208,17 +208,6 @@ class Quanly
 					i++;
 				}
 			}
-//			for(int i=0;i<n;i++)
-//			{
-//				if(a[i].get_hsx() == gan)
-//				{
-//					for(int j=i;j<n-1;j++)
-//					{
-//						a[j] = a[j+1];
-//					}
-//					n--;
-//				}
-//			}
 			cout<<"\nDanh sach laptop sau khi xoa lap top "<<nhaphsx<<" !!!\n";
 			for(int i=0;i<n;i++)
 			{
